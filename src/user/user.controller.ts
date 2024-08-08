@@ -72,9 +72,9 @@ export class UserController {
       }
   
       if (avatar) { 
-        if (currentUser.avatatUlr ) {
+        if (currentUser.avatarUlr ) {
           try {
-            fs.unlinkSync(currentUser.avatatUlr);
+            fs.unlinkSync(currentUser.avatarUlr);
           } catch (error) {
             console.error('Error deleting file:', error);
           }
@@ -85,7 +85,7 @@ export class UserController {
         const avatarName = avatar.originalname;
         const avatarPath = path.join(__dirname, '..', 'avatars', avatarName);
         fs.writeFileSync(avatarPath, optimizedImageBuffer);
-        currentUser.avatatUlr = avatarPath;
+        currentUser.avatarUlr = avatarPath;
       }
   
       currentUser.firstName = body.firstName;
