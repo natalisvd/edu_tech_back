@@ -97,5 +97,12 @@ export class UserService {
       throw error;
     }
   }
-
+  async update(user) {
+    return await this.prismaService.user.update({
+      where: {
+        id: user.id,
+      },
+      data: user,
+    });
+  }
 }

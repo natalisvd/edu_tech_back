@@ -18,7 +18,9 @@ import { CurrentUser } from 'libs/common/src/decorators';
 import { JwtPayload } from 'src/auth/interfaces';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { validateDto } from 'libs/common/src/helpers';
-
+import { resizeAndOptimizeImage } from 'libs/common/src/helpers/resize-image-helper';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Controller('user')
 export class UserController {
@@ -55,10 +57,44 @@ export class UserController {
 
 
 
+  @Patch('currentUser')
+  @UseInterceptors(FileInterceptor('avatar'))
+  async updateUser(
+    @CurrentUser() user: JwtPayload,
+    @UploadedFile() avatar: Express.Multer.File,
+    @Body() body: UpdateUserDto,
+  ) {
+    try {
+      const currentUser = await this.userService.findOne(user.id);
+  
+      if (!currentUser) {
+        throw new BadRequestException('User not found');
+      }
+  
+      if (avatar) { 
+        if (currentUser.avatatUlr ) {
+          try {
+            fs.unlinkSync(currentUser.avatatUlr);
+          } catch (error) {
+            console.error('Error deleting file:', error);
+          }
+        }
+  
+        const optimizedImageBuffer = await resizeAndOptimizeImage(avatar.buffer);
+  
+        const avatarName = avatar.originalname;
+        const avatarPath = path.join(__dirname, '..', 'avatars', avatarName);
+        fs.writeFileSync(avatarPath, optimizedImageBuffer);
+        currentUser.avatatUlr = avatarPath;
+      }
+  
+      currentUser.firstName = body.firstName;
+      currentUser.lastName = body.lastName;
+  
+      return new UserResponce(await this.userService.update(currentUser));
+    } catch (error) {
+      throw new BadRequestException('Error updating user');
+    }
+  }
 
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
 }
