@@ -64,17 +64,17 @@ export class UserController {
   ) {
     try {
       const currentUser = await this.userService.findOne(user.id);
-  
+
       if (!currentUser) {
         throw new BadRequestException('User not found');
       }
-  
+
       const avatarDir = path.join(__dirname, '..', '..', 'avatars');
-  
+
       if (!fs.existsSync(avatarDir)) {
         fs.mkdirSync(avatarDir, { recursive: true });
       }
-  
+
       if (currentUser.avatarUlr) {
         try {
           const oldAvatarPath = path.resolve(currentUser.avatarUlr);
@@ -85,24 +85,24 @@ export class UserController {
           console.error('Error deleting file:', error);
         }
       }
-  
+
       if (avatar) {
-        const optimizedImageBuffer = await resizeAndOptimizeImage(avatar.buffer);
+        const optimizedImageBuffer = await resizeAndOptimizeImage(
+          avatar.buffer,
+        );
         const fileExt = path.extname(avatar.originalname);
         const avatarName = `avatar_${user.id}${fileExt}`;
         const avatarPath = path.join(avatarDir, avatarName);
-  
+
         fs.writeFileSync(avatarPath, optimizedImageBuffer);
         currentUser.avatarUlr = avatarName;
       }
-  
       currentUser.firstName = body.firstName;
       currentUser.lastName = body.lastName;
-  
+
       return new UserResponce(await this.userService.update(currentUser));
     } catch (error) {
       throw new BadRequestException('Error updating user');
     }
   }
-  
 }
