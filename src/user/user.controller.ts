@@ -55,8 +55,6 @@ export class UserController {
     return this.userService.delete(id, user);
   }
 
-
-
   @Patch('currentUser')
   @UseInterceptors(FileInterceptor('avatar'))
   async updateUser(
@@ -71,21 +69,31 @@ export class UserController {
         throw new BadRequestException('User not found');
       }
   
-      if (avatar) { 
-        if (currentUser.avatarUlr ) {
-          try {
-            fs.unlinkSync(currentUser.avatarUlr);
-          } catch (error) {
-            console.error('Error deleting file:', error);
+      const avatarDir = path.join(__dirname, '..', '..', 'avatars');
+  
+      if (!fs.existsSync(avatarDir)) {
+        fs.mkdirSync(avatarDir, { recursive: true });
+      }
+  
+      if (currentUser.avatarUlr) {
+        try {
+          const oldAvatarPath = path.resolve(currentUser.avatarUlr);
+          if (fs.existsSync(oldAvatarPath)) {
+            fs.unlinkSync(oldAvatarPath);
           }
+        } catch (error) {
+          console.error('Error deleting file:', error);
         }
+      }
   
+      if (avatar) {
         const optimizedImageBuffer = await resizeAndOptimizeImage(avatar.buffer);
+        const fileExt = path.extname(avatar.originalname);
+        const avatarName = `avatar_${user.id}${fileExt}`;
+        const avatarPath = path.join(avatarDir, avatarName);
   
-        const avatarName = avatar.originalname;
-        const avatarPath = path.join(__dirname, '..', 'avatars', avatarName);
         fs.writeFileSync(avatarPath, optimizedImageBuffer);
-        currentUser.avatarUlr = avatarPath;
+        currentUser.avatarUlr = avatarName;
       }
   
       currentUser.firstName = body.firstName;
@@ -96,5 +104,5 @@ export class UserController {
       throw new BadRequestException('Error updating user');
     }
   }
-
+  
 }
