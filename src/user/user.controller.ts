@@ -75,9 +75,9 @@ export class UserController {
         fs.mkdirSync(avatarDir, { recursive: true });
       }
 
-      if (currentUser.avatarUlr) {
+      if (currentUser.avatarUrl) {
         try {
-          const oldAvatarPath = path.resolve(currentUser.avatarUlr);
+          const oldAvatarPath = path.resolve(currentUser.avatarUrl);
           if (fs.existsSync(oldAvatarPath)) {
             fs.unlinkSync(oldAvatarPath);
           }
@@ -95,7 +95,7 @@ export class UserController {
         const avatarPath = path.join(avatarDir, avatarName);
 
         fs.writeFileSync(avatarPath, optimizedImageBuffer);
-        currentUser.avatarUlr = avatarName;
+        currentUser.avatarUrl = avatarName;
       }
       currentUser.firstName = body.firstName;
       currentUser.lastName = body.lastName;

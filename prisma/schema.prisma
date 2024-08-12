@@ -24,7 +24,7 @@ model User {
   updatedAt DateTime @default(now()) @map("updated_at")
   roles     Role[]
   token     Token[]
-  avatarUlr String?
+  avatarUrl String?
   skills    Skill[]
 
   @@map("users")

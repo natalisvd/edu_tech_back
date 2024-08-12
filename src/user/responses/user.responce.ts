@@ -7,7 +7,7 @@ export class UserResponce implements User {
 
   firstName: string;
   lastName: string;
-  avatarUlr: string;
+  avatarUrl: string;
 
   @Exclude()
   password: string;
