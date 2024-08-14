@@ -26,8 +26,22 @@ model User {
   token     Token[]
   avatarUrl String?
   skills    Skill[]
+  team      Team?    @relation("TeamParticipants", fields: [teamId], references: [id])
+  teamId    String?
+
+  teamAsLeader Team? @relation("TeamLeader")
 
   @@map("users")
+}
+
+model Team {
+  id           String @id @default(uuid())
+  teamName     String
+  participants User[] @relation("TeamParticipants")
+  teamLeader   User   @relation("TeamLeader", fields: [teamLeaderId], references: [id])
+  teamLeaderId String @unique
+
+  @@map("teams")
 }
 
 enum Role {
