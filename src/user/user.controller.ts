@@ -26,6 +26,10 @@ import * as path from 'path';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('teamleaders')
+  async findAllTeamleaders() {
+    return this.userService.findAllTeamLeaders();
+  }
   @Get(':idOrEmail')
   async findOne(@Param('idOrEmail') idOrEmail: string) {
     const user = await this.userService.findOne(idOrEmail);
@@ -38,10 +42,9 @@ export class UserController {
       .filter((usr) => usr.id !== currentUser.id)
       .map((user) => {
         delete user.password;
-        return  new UserResponce(user);;
+        return new UserResponce(user);
       });
   }
-
   @Post('currentUser')
   async currentUser(@CurrentUser() user: JwtPayload) {
     return this.findOne(user.id);

@@ -39,6 +39,16 @@ export class UserService {
     return await this.prismaService.user.findMany();
   }
 
+  async findAllTeamLeaders() {
+    return await this.prismaService.user.findMany({
+      where: {
+        roles: {
+          has: Role.TEAMLEADER,
+        },
+      },
+    });
+  }
+
   async findOne(idOrEmail: string, isReset = false): Promise<User> {
     if (isReset) {
       await this.cacheManager.del(idOrEmail);
@@ -49,9 +59,6 @@ export class UserService {
         where: {
           OR: [{ id: idOrEmail }, { email: idOrEmail }],
         },
-        // include: {
-        //   images: true,
-        // },
       });
       if (!user) {
         return null;
