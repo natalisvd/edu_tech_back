@@ -8,7 +8,8 @@ export class UserResponce implements User {
   firstName: string;
   lastName: string;
   avatarUrl: string;
-
+  teamId: string;
+  
   @Exclude()
   password: string;
 
@@ -17,7 +18,6 @@ export class UserResponce implements User {
 
   updatedAt: Date;
   roles: Role[];
-  
 
   constructor(user: User) {
     Object.assign(this, user);

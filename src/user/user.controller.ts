@@ -38,7 +38,7 @@ export class UserController {
       .filter((usr) => usr.id !== currentUser.id)
       .map((user) => {
         delete user.password;
-        return user;
+        return  new UserResponce(user);;
       });
   }
 
