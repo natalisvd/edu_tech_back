@@ -39,25 +39,30 @@ export class UserService {
     return await this.prismaService.user.findMany();
   }
 
-async findAllTeamLeaders() {
-  return await this.prismaService.user.findMany({
-    where: {
-      roles: {
-        has: Role.TEAMLEADER,
+  async findAllTeamLeaders(withTeams: boolean = true) {
+    return await this.prismaService.user.findMany({
+      where: {
+        roles: {
+          has: Role.TEAMLEADER,
+        },
+        ...(withTeams
+          ? {}
+          : {
+              teamId: null,
+            }),
       },
-    },
-    select: {
-      id: true,
-      email: true,
-      firstName: true,
-      lastName: true,
-      roles: true,
-      avatarUrl: true,
-      skills: true,
-      teamId: true,
-    },
-  });
-}
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        roles: true,
+        avatarUrl: true,
+        skills: true,
+        teamId: true,
+      },
+    });
+  }
 
   async findOne(idOrEmail: string, isReset = false): Promise<User> {
     if (isReset) {

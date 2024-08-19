@@ -26,9 +26,10 @@ import * as path from 'path';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('teamleaders')
-  async findAllTeamleaders() {
-    return this.userService.findAllTeamLeaders();
+  @Get('teamleaders/:withTeams')
+  async findAllTeamleaders(@Param('withTeams') withTeams: boolean) {
+    console.log({ withTeams });
+    return this.userService.findAllTeamLeaders(withTeams);
   }
   @Get(':idOrEmail')
   async findOne(@Param('idOrEmail') idOrEmail: string) {
