@@ -39,15 +39,25 @@ export class UserService {
     return await this.prismaService.user.findMany();
   }
 
-  async findAllTeamLeaders() {
-    return await this.prismaService.user.findMany({
-      where: {
-        roles: {
-          has: Role.TEAMLEADER,
-        },
+async findAllTeamLeaders() {
+  return await this.prismaService.user.findMany({
+    where: {
+      roles: {
+        has: Role.TEAMLEADER,
       },
-    });
-  }
+    },
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      roles: true,
+      avatarUrl: true,
+      skills: true,
+      teamId: true,
+    },
+  });
+}
 
   async findOne(idOrEmail: string, isReset = false): Promise<User> {
     if (isReset) {
