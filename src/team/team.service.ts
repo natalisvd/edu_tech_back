@@ -9,7 +9,7 @@ export class TeamService {
 
   async create(createTeamDto: CreateTeamDto) {
     const { teamLeaderId, ...teamData } = createTeamDto;
-
+  
     const newTeam = await this.prisma.team.create({
       data: {
         ...teamData,
@@ -42,17 +42,20 @@ export class TeamService {
         },
       },
     });
-
-    await this.prisma.user.update({
-      where: { id: teamLeaderId },
-      data: { teamId: newTeam.id },
-    });
-
-    return newTeam;
+  
+    const participantsWithoutLeader = newTeam.participants.filter(
+      participant => participant.id !== teamLeaderId
+    );
+  
+    return {
+      ...newTeam,
+      participants: participantsWithoutLeader,
+    };
   }
+  
 
   async findAll() {
-    return this.prisma.team.findMany({
+    const teams = await this.prisma.team.findMany({
       include: {
         teamLeader: {
           select: {
@@ -78,7 +81,19 @@ export class TeamService {
         },
       },
     });
+  
+    return teams.map((team) => {
+      const participantsWithoutLeader = team.participants.filter(
+        (participant) => participant.id !== team.teamLeader.id
+      );
+  
+      return {
+        ...team,
+        participants: participantsWithoutLeader,
+      };
+    });
   }
+  
   async findOne(id: string) {
     return this.prisma.team.findUnique({
       where: { id },
