@@ -17,6 +17,30 @@ export class TeamService {
           connect: { id: teamLeaderId },
         },
       },
+      include: {
+        teamLeader: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            roles: true,
+            avatarUrl: true,
+            skills: true,
+          },
+        },
+        participants: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            roles: true,
+            avatarUrl: true,
+            skills: true,
+          },
+        },
+      },
     });
 
     await this.prisma.user.update({
