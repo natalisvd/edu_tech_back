@@ -45,7 +45,7 @@ export class UserService {
         roles: {
           has: Role.TEAMLEADER,
         },
-        ...(withTeams
+        ...(!withTeams
           ? {}
           : {
               teamId: null,

@@ -8,9 +8,23 @@ export class TeamService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createTeamDto: CreateTeamDto) {
-    return this.prisma.team.create({
-      data: createTeamDto,
+    const { teamLeaderId, ...teamData } = createTeamDto;
+
+    const newTeam = await this.prisma.team.create({
+      data: {
+        ...teamData,
+        teamLeader: {
+          connect: { id: teamLeaderId },
+        },
+      },
     });
+
+    await this.prisma.user.update({
+      where: { id: teamLeaderId },
+      data: { teamId: newTeam.id },
+    });
+
+    return newTeam;
   }
 
   async findAll() {
