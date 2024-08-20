@@ -14,9 +14,33 @@ export class TeamService {
   }
 
   async findAll() {
-    return this.prisma.team.findMany();
+    return this.prisma.team.findMany({
+      include: {
+        teamLeader: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            roles: true,
+            avatarUrl: true,
+            skills: true,
+          },
+        },
+        participants: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            roles: true,
+            avatarUrl: true,
+            skills: true,
+          },
+        },
+      },
+    });
   }
-
   async findOne(id: string) {
     return this.prisma.team.findUnique({
       where: { id },
@@ -37,7 +61,6 @@ export class TeamService {
   }
 
   async getUserById(userId: string) {
-    // Логика получения пользователя по id
     return this.prisma.user.findUnique({
       where: { id: userId },
     });
