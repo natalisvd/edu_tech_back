@@ -94,7 +94,7 @@ export class UserController {
           avatar.buffer,
         );
         const fileExt = path.extname(avatar.originalname);
-        const avatarName = `avatar_${user.id}${fileExt}`;
+        const avatarName = `avatar_${Date.now()}${fileExt}`;
         const avatarPath = path.join(avatarDir, avatarName);
 
         fs.writeFileSync(avatarPath, optimizedImageBuffer);
