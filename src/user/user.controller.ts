@@ -28,7 +28,6 @@ export class UserController {
 
   @Get('teamleaders/:withTeams')
   async findAllTeamleaders(@Param('withTeams') withTeams: boolean) {
-    console.log({ withTeams });
     return this.userService.findAllTeamLeaders(withTeams);
   }
   @Get(':idOrEmail')
