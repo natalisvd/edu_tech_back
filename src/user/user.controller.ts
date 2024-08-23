@@ -80,7 +80,7 @@ export class UserController {
 
       if (currentUser.avatarUrl) {
         try {
-          const oldAvatarPath = path.resolve(currentUser.avatarUrl);
+          const oldAvatarPath = path.join(avatarDir, currentUser.avatarUrl); 
           if (fs.existsSync(oldAvatarPath)) {
             fs.unlinkSync(oldAvatarPath);
           }
