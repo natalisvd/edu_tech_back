@@ -30,6 +30,12 @@ export class UserController {
   async findAllTeamleaders(@Param('withTeams') withTeams: boolean) {
     return this.userService.findAllTeamLeaders(withTeams);
   }
+
+  @Get('workers/:withTeams')
+  async findAllWorkers(@Param('withTeams') withTeams: boolean) {
+    return this.userService.findAllWorkers(withTeams);
+  }
+  
   @Get(':idOrEmail')
   async findOne(@Param('idOrEmail') idOrEmail: string) {
     const user = await this.userService.findOne(idOrEmail);

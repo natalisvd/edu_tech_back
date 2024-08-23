@@ -64,6 +64,31 @@ export class UserService {
     });
   }
 
+  async findAllWorkers(withTeams: boolean = true) {
+    return await this.prismaService.user.findMany({
+      where: {
+        roles: {
+          has: Role.DEVELOPER || Role.DESIGNER,
+        },
+        ...(!withTeams
+          ? {}
+          : {
+              teamId: null,
+            }),
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        roles: true,
+        avatarUrl: true,
+        skills: true,
+        teamId: true,
+      },
+    });
+  }
+
   async findOne(idOrEmail: string, isReset = false): Promise<User> {
     if (isReset) {
       await this.cacheManager.del(idOrEmail);
