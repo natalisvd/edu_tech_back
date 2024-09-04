@@ -64,17 +64,12 @@ export class UserService {
     });
   }
 
-  async findAllWorkers(withTeams: boolean = true) {
+  async findAllWorkers() {
     return await this.prismaService.user.findMany({
       where: {
         roles: {
           has: Role.DEVELOPER || Role.DESIGNER,
         },
-        ...(!withTeams
-          ? {}
-          : {
-              teamId: null,
-            }),
       },
       select: {
         id: true,
