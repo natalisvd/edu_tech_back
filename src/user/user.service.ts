@@ -58,7 +58,6 @@ export class UserService {
         lastName: true,
         roles: true,
         avatarUrl: true,
-        skills: true,
         teamId: true,
       },
     });
@@ -78,7 +77,6 @@ export class UserService {
         lastName: true,
         roles: true,
         avatarUrl: true,
-        skills: true,
         teamId: true,
       },
     });

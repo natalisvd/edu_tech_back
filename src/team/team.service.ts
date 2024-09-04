@@ -26,7 +26,6 @@ export class TeamService {
             lastName: true,
             roles: true,
             avatarUrl: true,
-            skills: true,
           },
         },
         participants: {
@@ -37,7 +36,6 @@ export class TeamService {
             lastName: true,
             roles: true,
             avatarUrl: true,
-            skills: true,
           },
         },
       },
@@ -65,7 +63,6 @@ export class TeamService {
             lastName: true,
             roles: true,
             avatarUrl: true,
-            skills: true,
           },
         },
         participants: {
@@ -76,7 +73,6 @@ export class TeamService {
             lastName: true,
             roles: true,
             avatarUrl: true,
-            skills: true,
           },
         },
       },

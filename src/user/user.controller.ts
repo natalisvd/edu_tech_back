@@ -40,7 +40,6 @@ export class UserController {
     return this.userService.findAllWorkers();
   }
 
-  
   @Get(':idOrEmail')
   async findOne(@Param('idOrEmail') idOrEmail: string) {
     const user = await this.userService.findOne(idOrEmail);
@@ -126,6 +125,7 @@ export class UserController {
     @Body() users: Partial<User>[],
   ): Promise<{ message: string }> {
     try {
+      console.log({ users });
       await this.userService.updateMultipleUsers(users);
       return { message: 'Users updated successfully' };
     } catch (error) {
