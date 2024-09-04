@@ -83,8 +83,7 @@ export class UserController {
         throw new BadRequestException('User not found');
       }
 
-      const avatarDir = path.join(__dirname, '..', '..', 'avatars');
-
+      const avatarDir = path.join(__dirname, '..','..','..', 'avatars');
       if (!fs.existsSync(avatarDir)) {
         fs.mkdirSync(avatarDir, { recursive: true });
       }

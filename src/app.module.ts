@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { APP_GUARD } from '@nestjs/core'; 
-import { join } from 'path';
+import { APP_GUARD } from '@nestjs/core';
+import  { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,10 +20,10 @@ import { TeamModule } from './team/team.module';
       isGlobal: true,
     }),
     MulterModule.register({
-      dest: './avatars', 
+      dest: '/avatars',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'avatars'), 
+      rootPath: join(__dirname, '..', '..', 'avatars'), 
       serveRoot: '/avatars', 
     }),
     PrismaModule,
