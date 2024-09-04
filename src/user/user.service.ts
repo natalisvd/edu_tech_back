@@ -1,7 +1,7 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
-import { Role, User } from '@prisma/client';
+import { Prisma, Role, User } from '@prisma/client';
 import { genSaltSync, hashSync } from 'bcrypt';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
@@ -151,5 +151,25 @@ export class UserService {
       },
       data: user,
     });
+  }
+
+  async updateMultipleUsers(users: Partial<User>[]): Promise<void> {
+    try {
+      const updatePromises = users.map((user) =>
+        this.prismaService.user
+          .update({
+            where: { id: user.id },
+            data: user, 
+          })
+          .catch((error) => {
+            console.error(`Error updating user with ID ${user.id}:`, error);
+          })
+      );
+
+      await Promise.all(updatePromises);
+    } catch (error) {
+      console.error("Error updating multiple users:", error);
+      throw new Error("Failed to update multiple users.");
+    }
   }
 }

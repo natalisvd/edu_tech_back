@@ -10,6 +10,9 @@ import {
   UploadedFile,
   BadRequestException,
   UseInterceptors,
+  Put,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,6 +24,7 @@ import { validateDto } from 'libs/common/src/helpers';
 import { resizeAndOptimizeImage } from 'libs/common/src/helpers/resize-image-helper';
 import * as fs from 'fs';
 import * as path from 'path';
+import { User } from '@prisma/client';
 
 @Controller('user')
 export class UserController {
@@ -35,7 +39,7 @@ export class UserController {
   async findAllWorkers(@Param('withTeams') withTeams: boolean) {
     return this.userService.findAllWorkers(withTeams);
   }
-  
+
   @Get(':idOrEmail')
   async findOne(@Param('idOrEmail') idOrEmail: string) {
     const user = await this.userService.findOne(idOrEmail);
@@ -51,6 +55,7 @@ export class UserController {
         return new UserResponce(user);
       });
   }
+
   @Post('currentUser')
   async currentUser(@CurrentUser() user: JwtPayload) {
     return this.findOne(user.id);
@@ -86,7 +91,7 @@ export class UserController {
 
       if (currentUser.avatarUrl) {
         try {
-          const oldAvatarPath = path.join(avatarDir, currentUser.avatarUrl); 
+          const oldAvatarPath = path.join(avatarDir, currentUser.avatarUrl);
           if (fs.existsSync(oldAvatarPath)) {
             fs.unlinkSync(oldAvatarPath);
           }
@@ -112,6 +117,22 @@ export class UserController {
       return new UserResponce(await this.userService.update(currentUser));
     } catch (error) {
       throw new BadRequestException('Error updating user');
+    }
+  }
+
+  @Patch('updateUserMultiple')
+  async updateMultipleUsers(
+    @Body() users: Partial<User>[],
+  ): Promise<{ message: string }> {
+    try {
+      await this.userService.updateMultipleUsers(users);
+      return { message: 'Users updated successfully' };
+    } catch (error) {
+      console.error('Error in updateMultipleUsers controller:', error);
+      throw new HttpException(
+        'Failed to update users',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
