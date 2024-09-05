@@ -29,7 +29,8 @@ model User {
   team      Team?    @relation("TeamParticipants", fields: [teamId], references: [id])
   teamId    String?
 
-  teamAsLeader Team? @relation("TeamLeader")
+  teamAsLeader Team?    @relation("TeamLeader")
+  Course       Course[]
 
   @@map("users")
 }
@@ -63,11 +64,14 @@ model Token {
 }
 
 model Course {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String
-  courseUrl   String
-
+  tags        String[]
+  materials   String[]
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id]) 
+  
   @@map("courses")
 }
 
