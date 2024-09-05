@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { Prisma, Course } from '@prisma/client';
 
 @Injectable()
 export class CourseService {
-  create(createCourseDto: CreateCourseDto) {
-    return 'This action adds a new course';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(data: Prisma.CourseCreateInput): Promise<Course> {
+    const course = await this.prisma.course.create({
+      data,
+    });
+    return course;
   }
 
-  findAll() {
-    return `This action returns all course`;
+  async findAll(): Promise<Course[]> {
+    return this.prisma.course.findMany({
+      include: {
+        author: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} course`;
+  async findOne(id: string): Promise<Course | null> {
+    return this.prisma.course.findUnique({
+      where: { id },
+      include: {
+        author: true,
+      },
+    });
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+  async update(id: string, data: Prisma.CourseUpdateInput): Promise<Course> {
+    return this.prisma.course.update({
+      where: { id },
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} course`;
+  async remove(id: string): Promise<Course> {
+    return this.prisma.course.delete({
+      where: { id },
+    });
   }
 }
