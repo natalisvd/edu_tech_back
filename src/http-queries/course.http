@@ -1,0 +1,11 @@
+POST  http://localhost:5000/api/courses HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3MjU1NDYzODQsImV4cCI6MTcyNTYzMjc4NH0.A9yEBDBEdij9i3ROAdxPIwuKGZarK2Ep702FTmE0jx0
+
+{
+    "name": "Test Course",
+    "description":"desc",
+    "tags": ["tag1", "tag2"],
+    "materials": ["materials", "materials"],
+    "authorId":"2d578b75-faef-4473-89e8-87fc9c81aba2"
+}
