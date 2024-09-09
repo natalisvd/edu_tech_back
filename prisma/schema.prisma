@@ -70,6 +70,7 @@ model Course {
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
   lessons     Lesson[]
+  courseImageUrl String?
 
   @@map("courses")
 }
