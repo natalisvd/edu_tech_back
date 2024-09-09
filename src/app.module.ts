@@ -21,11 +21,11 @@ import { CourseModule } from './course/course.module';
       isGlobal: true,
     }),
     MulterModule.register({
-      dest: '/avatars',
+      dest: '/images',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'avatars'), 
-      serveRoot: '/avatars', 
+      rootPath: join(__dirname, '..', '..', 'images'), 
+      serveRoot: '/images', 
     }),
     PrismaModule,
     UserModule,
