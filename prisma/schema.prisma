@@ -67,12 +67,23 @@ model Course {
   id          String   @id @default(uuid())
   name        String
   description String
-  tags        String[]
-  materials   String[]
   authorId    String
-  author      User     @relation(fields: [authorId], references: [id]) 
-  
+  author      User     @relation(fields: [authorId], references: [id])
+  lessons     Lesson[]
+
   @@map("courses")
+}
+
+model Lesson {
+  id          String   @id @default(uuid())
+  title       String?
+  text        String?
+  matrials    String[]
+  indexNumber Int
+  Course      Course?  @relation(fields: [courseId], references: [id])
+  courseId    String?
+
+  @@map("lessons")
 }
 
 model Skill {
