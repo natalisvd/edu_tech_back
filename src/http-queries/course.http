@@ -5,8 +5,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1L
 {
     "name": "Test Course",
     "description":"desc",
-    "tags": ["tag1", "tag2"],
-    "materials": ["materials", "materials"],
     "authorId":"2d578b75-faef-4473-89e8-87fc9c81aba2"
 }
 ###
