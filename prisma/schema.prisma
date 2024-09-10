@@ -64,12 +64,12 @@ model Token {
 }
 
 model Course {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
-  lessons     Lesson[]
+  id             String   @id @default(uuid())
+  name           String
+  description    String
+  authorId       String
+  author         User     @relation(fields: [authorId], references: [id])
+  lessons        Lesson[]
   courseImageUrl String?
 
   @@map("courses")
@@ -81,8 +81,8 @@ model Lesson {
   text        String?
   matrials    String[]
   indexNumber Int
-  Course      Course?  @relation(fields: [courseId], references: [id])
-  courseId    String?
+  Course      Course   @relation(fields: [courseId], references: [id])
+  courseId    String
 
   @@map("lessons")
 }

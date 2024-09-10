@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TeamModule } from './team/team.module';
 import { CourseModule } from './course/course.module';
+import { LessonModule } from './lesson/lesson.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CourseModule } from './course/course.module';
     AuthModule,
     TeamModule,
     CourseModule,
+    LessonModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
