@@ -1,4 +1,3 @@
-// src/lesson/lesson.controller.ts
 import {
   Controller,
   Get,
