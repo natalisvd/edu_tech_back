@@ -9,6 +9,9 @@ export class CourseService {
   async create(data: Prisma.CourseCreateInput): Promise<Course> {
     const course = await this.prisma.course.create({
       data,
+      include: {
+        author: true,
+      },
     });
     return course;
   }
@@ -34,6 +37,9 @@ export class CourseService {
   async update(id: string, data: Prisma.CourseUpdateInput): Promise<Course> {
     return this.prisma.course.update({
       where: { id },
+      include: {
+        author: true,
+      },
       data,
     });
   }
@@ -41,6 +47,9 @@ export class CourseService {
   async remove(id: string): Promise<Course> {
     return this.prisma.course.delete({
       where: { id },
+      include: {
+        author: true,
+      },
     });
   }
 }
