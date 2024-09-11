@@ -26,6 +26,7 @@ export class CourseService {
       where: { id },
       include: {
         author: true,
+        lessons: true,  
       },
     });
   }

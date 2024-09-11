@@ -1,0 +1,11 @@
+POST  http://localhost:5000/api/lessons HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3MjU5NzM4NTYsImV4cCI6MTcyNjA2MDI1Nn0.PAies9nuN4EePTt3XATX6_Bxcv00hW1qn6t2sHaK3uc
+
+{
+    "title": "Test title",
+    "text":"text",
+    "indexNumber": 1,
+    "courseId": "d38a6472-71b6-4b11-900e-047e177040de"
+}
+###
