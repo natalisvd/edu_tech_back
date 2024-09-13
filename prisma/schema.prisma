@@ -79,7 +79,7 @@ model Lesson {
   id          String   @id @default(uuid())
   title       String?
   text        String?
-  matrials    String[]
+  materials   String[]
   indexNumber Int
   Course      Course   @relation(fields: [courseId], references: [id])
   courseId    String
