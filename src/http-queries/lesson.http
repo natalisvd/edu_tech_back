@@ -8,4 +8,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1L
     "indexNumber": 1,
     "courseId": "d38a6472-71b6-4b11-900e-047e177040de"
 }
+
 ###
+
+DELETE  http://localhost:5000/api/lessons/8bee1137-5189-4bbe-ac16-807f6f3a41fa HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3MjYyNDE0NDAsImV4cCI6MTcyNjMyNzg0MH0.An4nfRwTv9wh6gMG6Tn409jI_sZGl4ZJY7gYuD0niYI
