@@ -66,6 +66,7 @@
     ```
 
     - Replace `username` and `yourpassword` with your actual PostgreSQL credentials.
+    - If PostgreSQL is not installed, open [this link](https://www.postgresql.org/download/) and follow the installation instructions
     - Example:
 4. Migrate database:
      ```bash
