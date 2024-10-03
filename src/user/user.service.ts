@@ -24,7 +24,9 @@ export class UserService {
       data: {
         email: user.email,
         password: hashedPassword,
-        roles: roles,
+        roles: {
+          set: roles,  
+        },
         firstName: user.firstName,
         lastName: user.lastName,
       },
