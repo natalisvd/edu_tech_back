@@ -14,6 +14,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TeamModule } from './team/team.module';
 import { CourseModule } from './course/course.module';
 import { LessonModule } from './lesson/lesson.module';
+import { SeedService } from './seed/seed.service';
 
 @Module({
   imports: [
@@ -36,6 +37,6 @@ import { LessonModule } from './lesson/lesson.module';
     LessonModule,
   ],
   controllers: [AppController],
-  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
+  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }, SeedService],
 })
 export class AppModule {}

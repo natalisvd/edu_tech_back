@@ -12,9 +12,8 @@ COPY . .
 
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
-
 ENV PORT=5000
 
 EXPOSE ${PORT}
 
-CMD npx prisma migrate dev && npm run start:dev
+CMD npx prisma migrate deploy && npm run start:dev
