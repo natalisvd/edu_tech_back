@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: janedoe
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: edu_tech
+    # networks:
+    #   - default
+
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXP: ${JWT_EXP}
+    # networks:
+    #   - default
+
+# networks:
+#   default:
+#     driver: bridge
