@@ -7,8 +7,8 @@ services:
       POSTGRES_USER: janedoe
       POSTGRES_PASSWORD: "123456"
       POSTGRES_DB: edu_tech
-    # networks:
-    #   - default
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
@@ -20,9 +20,18 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXP: ${JWT_EXP}
-    # networks:
-    #   - default
 
-# networks:
-#   default:
-#     driver: bridge
+  nextjs:
+    build: ../edu_tech 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+    environment:
+      NODE_ENV: development  
+    command: npm run dev
+    volumes:
+    - ../edu_tech:/app
+
+volumes:
+  postgres_data:
