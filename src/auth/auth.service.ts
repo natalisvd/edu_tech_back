@@ -33,10 +33,24 @@ export class AuthService {
     if (user) {
       throw new ConflictException('User with this email already exists');
     }
-    return await this.userService.save(dto).catch((err) => {
-      this.logger.error(err);
-      return null;
-    });
+    // return await this.userService.save(dto).catch((err) => {
+    //   this.logger.error(err);
+    //   return null;
+    // });
+
+  const defaultAvatarUrl = 'https://img.freepik.com/free-photo/beautiful-kitten-with-colorful-clouds_23-2150752964.jpg?size=626&ext=jpg&ga=GA1.1.1297763733.1728259200&semt=ais_hybrid';
+
+  const newUserData = {
+    ...dto,
+    avatarUrl: defaultAvatarUrl,
+  };
+  
+  const newUser = await this.userService.save(newUserData).catch((err) => {
+    this.logger.error(err);
+    return null;
+  });
+
+  return newUser;
   }
 
   async login(dto: LoginDto, agent: string): Promise<Tokens> {

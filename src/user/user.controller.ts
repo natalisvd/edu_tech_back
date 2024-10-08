@@ -78,7 +78,6 @@ export class UserController {
   ) {
     try {
       const currentUser = await this.userService.findOne(user.id);
-
       if (!currentUser) {
         throw new BadRequestException('User not found');
       }
@@ -87,7 +86,6 @@ export class UserController {
       if (!fs.existsSync(avatarDir)) {
         fs.mkdirSync(avatarDir, { recursive: true });
       }
-
       if (currentUser.avatarUrl) {
         try {
           const oldAvatarPath = path.join(avatarDir, currentUser.avatarUrl);
@@ -118,6 +116,8 @@ export class UserController {
       throw new BadRequestException('Error updating user');
     }
   }
+
+  
 
   @Patch('updateUserMultiple')
   async updateMultipleUsers(

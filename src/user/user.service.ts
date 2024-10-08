@@ -29,6 +29,7 @@ export class UserService {
         },
         firstName: user.firstName,
         lastName: user.lastName,
+        avatarUrl: user.avatarUrl || null, 
       },
     });
   }

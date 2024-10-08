@@ -13,4 +13,6 @@ export class RegisterDto {
     @MinLength(6)
     @Validate(IsPasswordsMatchingConstraint)
     passwordRepeat: string; 
+
+    avatarUrl: string;
 }

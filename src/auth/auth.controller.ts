@@ -55,11 +55,13 @@ export class AuthController {
         `It is not possible to register a user with the following data: ${JSON.stringify(dto)}`,
       );
     }
+
     if (!tokens) {
       throw new BadRequestException(
         `It is not possible to login with the following data: ${JSON.stringify(dto)}`,
       );
     }
+    
     this.setRefreshTokenToCookies(tokens, res);
     return new UserResponce(user);
   }
