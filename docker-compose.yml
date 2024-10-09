@@ -1,6 +1,8 @@
 services:
   postgres:
     image: postgres:14
+    networks:
+      - network
     environment:
       POSTGRES_USER: janedoe
       POSTGRES_PASSWORD: "123456"
@@ -12,8 +14,11 @@ services:
 
   app:
     build: .
+#      network: host
     ports:
       - "5000:5000"
+    networks:
+      - network
     depends_on:
       - postgres
     environment:
@@ -22,16 +27,23 @@ services:
       JWT_EXP: ${JWT_EXP}
 
   nextjs:
-    build: ../edu_tech 
+    build: ../edu_tech
+#      network: host
     ports:
       - "3000:3000"
+    networks:
+      - network
     depends_on:
       - app
     environment:
-      NODE_ENV: development  
+      NODE_ENV: development
     command: npm run dev
     volumes:
     - ../edu_tech:/app
+
+networks:
+  network:
+    driver: bridge
 
 volumes:
   postgres_data:
