@@ -1,0 +1,44 @@
+name: build-deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-dev:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+          if_key_exists: ignore
+
+      - name: Build project
+        uses: appleboy/ssh-action@master
+        with:
+          host: 64.226.68.123
+          username: muchnik
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          command_timeout: 200m
+          script: |
+            cd ~/edutech/server
+            git pull
+            docker-compose build
+
+      - name: Deploy project
+        uses: appleboy/ssh-action@master
+        with:
+          host:  64.226.68.123
+          username: muchnik
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          command_timeout: 200m
+          script: |
+            cd ~/edutech/server
+            docker-compose up -d
