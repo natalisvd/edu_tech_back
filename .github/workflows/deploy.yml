@@ -41,4 +41,4 @@ jobs:
           command_timeout: 200m
           script: |
             cd ~/edutech/server
-            docker-compose up -d
+            docker-compose up --build --force-recreate --remove-orphans -d
