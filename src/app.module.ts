@@ -15,6 +15,7 @@ import { TeamModule } from './team/team.module';
 import { CourseModule } from './course/course.module';
 import { LessonModule } from './lesson/lesson.module';
 import { SeedService } from './seed/seed.service';
+import { SkillModule } from './skill/skill.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { SeedService } from './seed/seed.service';
     TeamModule,
     CourseModule,
     LessonModule,
+    SkillModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }, SeedService],

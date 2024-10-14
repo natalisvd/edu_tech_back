@@ -93,8 +93,7 @@ model Skill {
   title        String
   level        Level
   typeOfSkills TypeOfSkiils
-  Course       Course?      @relation(fields: [courseId], references: [id])
-  courseId     String?
+  Course       Course[]
 
   @@map("skills")
 }

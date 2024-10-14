@@ -1,0 +1,34 @@
+POST  http://localhost:5000/api/skill HTTP/1.1
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3Mjg4OTg5NjgsImV4cCI6MTcyODk4NTM2OH0.SvSynnZ-7HJe3Tz9a_apmEw76xy3_IObZUCLIIT5v0c
+
+{
+    "title":"redux",
+    "level":"MIDLE",
+    "typeOfSkills":"PRIMARY"
+}
+
+###
+GET  http://localhost:5000/api/skill HTTP/1.1
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3Mjg4OTg5NjgsImV4cCI6MTcyODk4NTM2OH0.SvSynnZ-7HJe3Tz9a_apmEw76xy3_IObZUCLIIT5v0c
+
+###
+GET  http://localhost:5000/api/skill/f48e87d9-cda7-48b5-9689-0cc872a6a1ef HTTP/1.1
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3Mjg4OTg5NjgsImV4cCI6MTcyODk4NTM2OH0.SvSynnZ-7HJe3Tz9a_apmEw76xy3_IObZUCLIIT5v0c
+
+###
+PATCH   http://localhost:5000/api/skill/f48e87d9-cda7-48b5-9689-0cc872a6a1ef HTTP/1.1
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3Mjg4OTg5NjgsImV4cCI6MTcyODk4NTM2OH0.SvSynnZ-7HJe3Tz9a_apmEw76xy3_IObZUCLIIT5v0c
+
+{
+    "title":"reduxtoolkit",
+    "level":"MIDLE",
+    "typeOfSkills":"PRIMARY"
+}
+###
+DELETE  http://localhost:5000/api/skill/f48e87d9-cda7-48b5-9689-0cc872a6a1ef HTTP/1.1
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3Mjg4OTg5NjgsImV4cCI6MTcyODk4NTM2OH0.SvSynnZ-7HJe3Tz9a_apmEw76xy3_IObZUCLIIT5v0c
