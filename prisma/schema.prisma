@@ -15,18 +15,18 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String      @id @default(uuid())
+  email     String      @unique
   password  String
   firstName String?
   lastName  String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @default(now()) @map("updated_at")
   roles     Role[]
   token     Token[]
   avatarUrl String?
-  skills    Skill[]
-  team      Team?    @relation("TeamParticipants", fields: [teamId], references: [id])
+  skills    userSkill[]
+  team      Team?       @relation("TeamParticipants", fields: [teamId], references: [id])
   teamId    String?
 
   teamAsLeader Team?    @relation("TeamLeader")
@@ -71,6 +71,7 @@ model Course {
   author         User     @relation(fields: [authorId], references: [id])
   lessons        Lesson[]
   courseImageUrl String?
+  skills         Skill[]
 
   @@map("courses")
 }
@@ -88,45 +89,52 @@ model Lesson {
 }
 
 model Skill {
-  id                    String               @id @default(uuid())
-  description           String
-  isConfirmed           Boolean              @default(false)
-  SkillTestingTemplate  SkillTestingTemplate @relation(fields: [skillTestingTempateId], references: [id])
-  User                  User?                @relation(fields: [userId], references: [id])
-  userId                String?
-  skillTestingTempateId String
+  id           String       @id @default(uuid())
+  title        String
+  level        Level
+  typeOfSkills TypeOfSkiils
+  Course       Course?      @relation(fields: [courseId], references: [id])
+  courseId     String?
 
   @@map("skills")
 }
 
-model SkillTestingTemplate {
-  id            String         @id @default(uuid())
-  skillId       String
-  tests         Test[]
-  textQuestions TextQuestion[]
-  Skill         Skill[]
+enum TypeOfSkiils {
+  PRIMARY
+  ADDITIONAL
+}
 
-  @@map("skills_testing")
+enum Level {
+  JUNIOR
+  MIDLE
+  SENIOR
+}
+
+model userSkill {
+  id          String  @id @default(uuid())
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+  skillId     String
+  isConfirmed Boolean @default(false)
+
+  @@map("user_skills")
 }
 
 model Test {
-  id                  String                @id @default(uuid())
+  id                  String @id @default(uuid())
   quetion             String
   answer1             String
   answer2             String
   answer3             String
   answer4             String
   correctAnswerNumber Int
-  SkillTesting        SkillTestingTemplate? @relation(fields: [skillTestingId], references: [id])
-  skillTestingId      String?
 
   @@map("tests")
 }
 
 model TextQuestion {
-  id             String                @id @default(uuid())
+  id             String  @id @default(uuid())
   question       String
-  SkillTesting   SkillTestingTemplate? @relation(fields: [skillTestingId], references: [id])
   skillTestingId String?
 
   @@map("text_questions")
