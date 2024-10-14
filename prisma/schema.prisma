@@ -90,7 +90,7 @@ model Lesson {
 
 model Skill {
   id           String       @id @default(uuid())
-  title        String
+  title        String       @unique
   level        Level
   typeOfSkills TypeOfSkiils
   Course       Course[]

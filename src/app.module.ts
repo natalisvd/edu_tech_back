@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { APP_GUARD } from '@nestjs/core';
-import  { join } from 'path';
+import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -16,6 +16,7 @@ import { CourseModule } from './course/course.module';
 import { LessonModule } from './lesson/lesson.module';
 import { SeedService } from './seed/seed.service';
 import { SkillModule } from './skill/skill.module';
+import { SkillService } from './skill/skill.service';
 
 @Module({
   imports: [
@@ -27,8 +28,8 @@ import { SkillModule } from './skill/skill.module';
       dest: '/images',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'images'), 
-      serveRoot: '/images', 
+      rootPath: join(__dirname, '..', '..', 'images'),
+      serveRoot: '/images',
     }),
     PrismaModule,
     UserModule,
@@ -39,6 +40,11 @@ import { SkillModule } from './skill/skill.module';
     SkillModule,
   ],
   controllers: [AppController],
-  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }, SeedService],
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    SeedService,
+    SkillService,
+  ],
 })
 export class AppModule {}
