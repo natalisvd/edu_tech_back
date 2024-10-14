@@ -102,11 +102,10 @@ enum TypeOfSkiils {
   PRIMARY
   ADDITIONAL
 }
-
 enum Level {
-  JUNIOR
-  MIDLE
-  SENIOR
+  BEGINER
+  INTERMADIATE
+  ADVANCE
 }
 
 model userSkill {

@@ -34,43 +34,43 @@ export class SeedService {
 
       await this.createSkillIfNotExists({
         title: 'redux',
-        level: Level.MIDLE,
+        level: Level.ADVANCE,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
 
       await this.createSkillIfNotExists({
         title: 'typescript',
-        level: Level.JUNIOR,
+        level: Level.BEGINER,
         typeOfSkills: TypeOfSkiils.ADDITIONAL,
       });
 
       await this.createSkillIfNotExists({
         title: 'React',
-        level: Level.SENIOR,
+        level: Level.INTERMADIATE,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
       
       await this.createSkillIfNotExists({
         title: 'Node.js',
-        level: Level.MIDLE,
+        level: Level.BEGINER,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
       
       await this.createSkillIfNotExists({
         title: 'GraphQL',
-        level: Level.JUNIOR,
+        level: Level.ADVANCE,
         typeOfSkills: TypeOfSkiils.ADDITIONAL,
       });
       
       await this.createSkillIfNotExists({
         title: 'Docker',
-        level: Level.MIDLE,
+        level: Level.INTERMADIATE,
         typeOfSkills: TypeOfSkiils.ADDITIONAL,
       });
       
       await this.createSkillIfNotExists({
         title: 'Python',
-        level: Level.SENIOR,
+        level: Level.INTERMADIATE,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
 
