@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Course } from '@prisma/client';
+import { Course } from '@prisma/client';
+import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Injectable()
 export class CourseService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.CourseCreateInput): Promise<Course> {
+  async create(data: CreateCourseDto): Promise<Course> {
     const course = await this.prisma.course.create({
       data,
       include: {
@@ -29,12 +31,12 @@ export class CourseService {
       where: { id },
       include: {
         author: true,
-        lessons: true,  
+        lessons: true,
       },
     });
   }
 
-  async update(id: string, data: Prisma.CourseUpdateInput): Promise<Course> {
+  async update(id: string, data: UpdateCourseDto): Promise<Course> {
     return this.prisma.course.update({
       where: { id },
       include: {

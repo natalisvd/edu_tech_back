@@ -6,28 +6,19 @@ import {
   Get,
   HttpStatus,
   Post,
-  Query,
-  Req,
   Res,
   UnauthorizedException,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Request, Response } from 'express';
+import {  Response } from 'express';
 
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
 import { Tokens } from './interfaces';
-// import { Cookie, Public, UserAgent } from '@common/decorators';
-// import { UserResponce } from '@user/responses';
-import { GoogleGuard } from './guards/google.guard';
 import { HttpService } from '@nestjs/axios';
-import { map, mergeMap, tap } from 'rxjs';
 import { Cookie, Public, UserAgent } from 'libs/common/src/decorators';
 import { UserResponce } from 'src/user/responses';
-import { handleTimeoutAndErrors } from 'libs/common/src/helpers';
-// import { handleTimeoutAndErrors } from '@common/helpers';
 
 const REFRESH_TOKEN = 'refreshtoken';
 
