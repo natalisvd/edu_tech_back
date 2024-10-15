@@ -10,7 +10,6 @@ import {
   UploadedFile,
   BadRequestException,
   UseInterceptors,
-  Put,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
@@ -20,7 +19,6 @@ import { UserResponce } from './responses';
 import { CurrentUser } from 'libs/common/src/decorators';
 import { JwtPayload } from 'src/auth/interfaces';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { validateDto } from 'libs/common/src/helpers';
 import { resizeAndOptimizeImage } from 'libs/common/src/helpers/resize-image-helper';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -45,6 +43,7 @@ export class UserController {
     const user = await this.userService.findOne(idOrEmail);
     return new UserResponce(user);
   }
+
   @Get()
   async findAllUsers(@CurrentUser() currentUser: JwtPayload) {
     const users = await this.userService.findAllUsers();
@@ -100,9 +99,7 @@ export class UserController {
       }
 
       if (avatar) {
-        const optimizedImageBuffer = await resizeAndOptimizeImage(
-          avatar.buffer,
-        );
+        const optimizedImageBuffer = await resizeAndOptimizeImage(avatar.buffer);
         const fileExt = path.extname(avatar.originalname);
         const avatarName = `avatar_${Date.now()}${fileExt}`;
         const avatarPath = path.join(avatarDir, avatarName);
@@ -110,10 +107,13 @@ export class UserController {
         fs.writeFileSync(avatarPath, optimizedImageBuffer);
         currentUser.avatarUrl = avatarName;
       }
+
       currentUser.firstName = body.firstName;
       currentUser.lastName = body.lastName;
 
-      return new UserResponce(await this.userService.update(currentUser));
+      const updatedUser = await this.userService.update(currentUser);
+
+      return new UserResponce(updatedUser);
     } catch (error) {
       throw new BadRequestException('Error updating user');
     }
