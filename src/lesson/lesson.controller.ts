@@ -9,14 +9,15 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { LessonService } from './lesson.service';
-import { Prisma } from '@prisma/client';
+import { CreateLessonDto } from './dto/create-lesson.dto';
+import { UpdateLessonDto } from './dto/update-lesson.dto';
 
 @Controller('lessons')
 export class LessonController {
   constructor(private readonly lessonService: LessonService) {}
 
   @Post()
-  async create(@Body() createLessonDto: Prisma.LessonCreateInput) {
+  async create(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonService.create(createLessonDto);
   }
 
@@ -33,7 +34,7 @@ export class LessonController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateLessonDto: Prisma.LessonUpdateInput,
+    @Body() updateLessonDto: UpdateLessonDto,
   ) {
     const existingLesson = await this.lessonService.findOne(id);
     if (!existingLesson) {

@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Lesson } from '@prisma/client';
+import { CreateLessonDto } from './dto/create-lesson.dto';
+import { UpdateLessonDto } from './dto/update-lesson.dto';
 
 @Injectable()
 export class LessonService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: Prisma.LessonCreateInput): Promise<Lesson> {
+  async create(data:CreateLessonDto): Promise<CreateLessonDto> {
     return this.prisma.lesson.create({
       data,
     });
@@ -29,7 +31,7 @@ export class LessonService {
     });
   }
 
-  async update(id: string, data: Prisma.LessonUpdateInput): Promise<Lesson> {
+  async update(id: string, data:UpdateLessonDto): Promise<CreateLessonDto> {
     return this.prisma.lesson.update({
       where: { id },
       data,
