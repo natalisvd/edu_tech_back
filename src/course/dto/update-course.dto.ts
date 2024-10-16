@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsUrl } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsString, IsOptional, IsUrl, IsArray, IsUUID } from 'class-validator';
 
 export class UpdateCourseDto {
   @ApiProperty({ description: 'Course name', example: 'NestJS Basics', required: false })
@@ -21,4 +21,14 @@ export class UpdateCourseDto {
   @IsOptional()
   @IsUrl()
   courseImageUrl?: string;
+
+  @ApiPropertyOptional({ 
+    description: 'Array of skill IDs associated with the course', 
+    example: ['123e4567-e89b-12d3-a456-426614174001', '123e4567-e89b-12d3-a456-426614174002'],
+    type: [String]
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUUID(undefined, { each: true })
+  skillIds?: string[];
 }

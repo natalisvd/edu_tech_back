@@ -1,19 +1,31 @@
 POST  http://localhost:5000/api/courses HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3MjU1NDYzODQsImV4cCI6MTcyNTYzMjc4NH0.A9yEBDBEdij9i3ROAdxPIwuKGZarK2Ep702FTmE0jx0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODEzMTAyLTY2ZjEtNDE5YS1iZTBlLTZhYWUzZWQyZjkxMSIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImlhdCI6MTcyOTA2NDYwMiwiZXhwIjoxNzI5MTUxMDAyfQ.923X-unT8-lBdCg3TV4xHL_gA_NWohAjtkFzXtqiSlw
 
 {
     "name": "Test Course",
     "description":"desc",
-    "authorId":"2d578b75-faef-4473-89e8-87fc9c81aba2"
+    "authorId":"60813102-66f1-419a-be0e-6aae3ed2f911",
+    "skillIds":["061a44de-c285-445d-bae1-024d551f4d2c", "7c628d72-21c7-4b48-be24-e71c89abfe6c"]
 }
 ###
 GET   http://localhost:5000/api/courses HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3MjU1NDYzODQsImV4cCI6MTcyNTYzMjc4NH0.A9yEBDBEdij9i3ROAdxPIwuKGZarK2Ep702FTmE0jx0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODEzMTAyLTY2ZjEtNDE5YS1iZTBlLTZhYWUzZWQyZjkxMSIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImlhdCI6MTcyOTA2NDYwMiwiZXhwIjoxNzI5MTUxMDAyfQ.923X-unT8-lBdCg3TV4xHL_gA_NWohAjtkFzXtqiSlw
 ###
 
 GET   http://localhost:5000/api/courses/d38a6472-71b6-4b11-900e-047e177040de HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3MjU5NzM4NTYsImV4cCI6MTcyNjA2MDI1Nn0.PAies9nuN4EePTt3XATX6_Bxcv00hW1qn6t2sHaK3uc
 ###
+
+PATCH   http://localhost:5000/api/courses/36ca9821-fb6d-4473-b86e-166006021e01 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODEzMTAyLTY2ZjEtNDE5YS1iZTBlLTZhYWUzZWQyZjkxMSIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImlhdCI6MTcyOTA2NDYwMiwiZXhwIjoxNzI5MTUxMDAyfQ.923X-unT8-lBdCg3TV4xHL_gA_NWohAjtkFzXtqiSlw
+
+{
+    "name": "Test Course",
+    "description":"desc",
+    "authorId":"60813102-66f1-419a-be0e-6aae3ed2f911",
+    "skillIds":["061a44de-c285-445d-bae1-024d551f4d2c"]
+}

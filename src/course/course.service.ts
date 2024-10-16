@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Course } from '@prisma/client';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -9,12 +9,33 @@ export class CourseService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateCourseDto): Promise<Course> {
+    const { skillIds, ...courseData } = data;
+
+    if (skillIds && skillIds.length > 0) {
+      const existingSkills = await this.prisma.skill.findMany({
+        where: { id: { in: skillIds } },
+      });
+
+      if (existingSkills.length !== skillIds.length) {
+        throw new NotFoundException('One or more skills not found');
+      }
+    }
+
     const course = await this.prisma.course.create({
-      data,
+      data: {
+        ...courseData,
+        skills: skillIds
+          ? {
+              connect: skillIds.map((id) => ({ id })),
+            }
+          : undefined,
+      },
       include: {
         author: true,
+        skills: true, 
       },
     });
+
     return course;
   }
 
@@ -22,6 +43,7 @@ export class CourseService {
     return this.prisma.course.findMany({
       include: {
         author: true,
+        skills: true, 
       },
     });
   }
@@ -32,18 +54,41 @@ export class CourseService {
       include: {
         author: true,
         lessons: true,
+        skills: true, 
       },
     });
   }
 
   async update(id: string, data: UpdateCourseDto): Promise<Course> {
-    return this.prisma.course.update({
+    const { skillIds, ...courseData } = data;
+  
+    if (skillIds && skillIds.length > 0) {
+      const existingSkills = await this.prisma.skill.findMany({
+        where: { id: { in: skillIds } },
+      });
+  
+      if (existingSkills.length !== skillIds.length) {
+        throw new NotFoundException('One or more skills not found');
+      }
+    }
+  
+    const course = await this.prisma.course.update({
       where: { id },
+      data: {
+        ...courseData,
+        skills: skillIds
+          ? {
+              set: skillIds.map((id) => ({ id })), 
+            }
+          : undefined,
+      },
       include: {
         author: true,
+        skills: true,
       },
-      data,
     });
+  
+    return course;
   }
 
   async remove(id: string): Promise<Course> {
