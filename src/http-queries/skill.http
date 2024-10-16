@@ -1,10 +1,10 @@
 POST  http://localhost:5000/api/skill HTTP/1.1
 content-type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1LWZhZWYtNDQ3My04OWU4LTg3ZmM5YzgxYWJhMiIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlcyI6WyJURUFNTEVBREVSIl0sImZpcnN0TmFtZSI6ItCS0LXQu9C40LrQuNC5IiwibGFzdE5hbWUiOiLQmtC-0LzQv9GM0Y7RgtC10YDRidC40JoiLCJpYXQiOjE3Mjg4OTg5NjgsImV4cCI6MTcyODk4NTM2OH0.SvSynnZ-7HJe3Tz9a_apmEw76xy3_IObZUCLIIT5v0c
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1NTc2NDQ3LWYzYjEtNDNmMi05ZWI2LTQ3YmVmZWUxMDNlNiIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiJmaXJzdE5hbWUiLCJsYXN0TmFtZSI6Imxhc3ROYW1lIiwiaWF0IjoxNzI5MDc2MDU3LCJleHAiOjE3MjkxNjI0NTd9.lJmINDQcnDPEN1wHriaoOPcGKtTmMUSCpgMADhIvcOk
 
 {
-    "title":"redux",
-    "level":"MIDLE",
+    "title":"Python",
+    "level":"INTERMADIATE",
     "typeOfSkills":"PRIMARY"
 }
 

@@ -101,6 +101,18 @@ export class SeedService {
 
   private async createSkillIfNotExists(createSkillDto: CreateSkillDto) {
     try {
+      const existingSkill = await this.skillService.findSkillByTitleAndLevel(
+        createSkillDto.title,
+        createSkillDto.level,
+      );
+
+      if (existingSkill) {
+        console.log(
+          `Skill with title "${createSkillDto.title}" and level "${createSkillDto.level}" already exists. Skipping...`,
+        );
+        return;
+      }
+
       await this.skillService.create(createSkillDto);
     } catch (error) {
       if (
