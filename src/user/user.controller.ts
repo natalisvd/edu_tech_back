@@ -82,7 +82,7 @@ export class UserController {
         throw new BadRequestException('User not found');
       }
 
-      const avatarDir = path.join(__dirname, '..','..','..', 'images');
+      const avatarDir = path.join(__dirname, '..', '..', '..', 'images');
       if (!fs.existsSync(avatarDir)) {
         fs.mkdirSync(avatarDir, { recursive: true });
       }
@@ -99,7 +99,9 @@ export class UserController {
       }
 
       if (avatar) {
-        const optimizedImageBuffer = await resizeAndOptimizeImage(avatar.buffer);
+        const optimizedImageBuffer = await resizeAndOptimizeImage(
+          avatar.buffer,
+        );
         const fileExt = path.extname(avatar.originalname);
         const avatarName = `avatar_${Date.now()}${fileExt}`;
         const avatarPath = path.join(avatarDir, avatarName);
@@ -111,7 +113,10 @@ export class UserController {
       currentUser.firstName = body.firstName;
       currentUser.lastName = body.lastName;
 
-      const updatedUser = await this.userService.update(currentUser);
+      const updatedUser = await this.userService.update(currentUser.id, {
+        ...currentUser,
+        skillIds: body.skillIds,
+      });
 
       return new UserResponce(updatedUser);
     } catch (error) {

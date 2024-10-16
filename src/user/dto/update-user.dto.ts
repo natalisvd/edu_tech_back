@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsArray, IsOptional, IsUUID } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @ApiPropertyOptional({
@@ -33,4 +34,13 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   })
   avatar?: string;
 
+  @ApiPropertyOptional({ 
+    description: 'Array of skill IDs associated with the course', 
+    example: ['123e4567-e89b-12d3-a456-426614174001', '123e4567-e89b-12d3-a456-426614174002'],
+    type: [String]
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUUID(undefined, { each: true })
+  skillIds?: string[];
 }

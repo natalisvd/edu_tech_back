@@ -1,4 +1,10 @@
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { Prisma, Role, User } from '@prisma/client';
@@ -7,6 +13,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { convertToSecondsUtil } from 'libs/common/src/utils';
 import { JwtPayload } from 'src/auth/interfaces';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -25,7 +32,7 @@ export class UserService {
         email: user.email,
         password: hashedPassword,
         roles: {
-          set: roles,  
+          set: roles,
         },
         firstName: user.firstName,
         lastName: user.lastName,
@@ -107,6 +114,7 @@ export class UserService {
     }
     return user;
   }
+
   async delete(id: string, user: JwtPayload) {
     if (user.id !== id && !user.roles.includes(Role.ADMIN)) {
       throw new ForbiddenException();
@@ -134,17 +142,94 @@ export class UserService {
             set: [newRole],
           },
         },
+        include: {
+          skills: true,
+        },
       });
     } catch (error) {
       throw error;
     }
   }
-  async update(user) {
-    return await this.prismaService.user.update({
-      where: {
-        id: user.id,
+
+  async update(id: string, data: UpdateUserDto): Promise<User> {
+    const { skillIds, ...userData } = data;
+
+    console.log({ skillIds });
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const updatedUser = await this.prismaService.user.update({
+      where: { id },
+      data: {
+        ...userData,
       },
-      data: user,
+      include: {
+        skills: true,
+      },
+    });
+
+    if (!skillIds) {
+      return updatedUser;
+    }
+
+    const existingSkills = await this.prismaService.skill.findMany({
+      where: { id: { in: skillIds } },
+    });
+
+    if (existingSkills.length !== skillIds.length) {
+      console.log('One or more skills not found');
+      throw new NotFoundException('One or more skills not found');
+    }
+
+    const currentSkills = await this.prismaService.userSkill.findMany({
+      where: { userId: id },
+      include: {
+        skill: true,
+      },
+    });
+    console.log({ currentSkills });
+
+    const skillsToRemove = currentSkills.filter(
+      (skill) => !skillIds.includes(skill.skillId) && skill.isConfirmed,
+    );
+    console.log({ skillsToRemove });
+
+    if (skillsToRemove.length > 0) {
+      throw new BadRequestException('Cannot delete or update confirmed skills');
+    }
+
+    await this.prismaService.userSkill.deleteMany({
+      where: {
+        userId: id,
+        skillId: { in: skillsToRemove.map((skill) => skill.skillId) },
+        isConfirmed: false,
+      },
+    });
+
+    const skillsToAdd = skillIds.filter(
+      (skillId) => !currentSkills.some((skill) => skill.skillId === skillId),
+    );
+    console.log({ skillsToAdd });
+    if (skillsToAdd.length > 0) {
+      await this.prismaService.userSkill.createMany({
+        data: skillsToAdd.map((skillId) => ({
+          userId: id,
+          skillId,
+          isConfirmed: false,
+        })),
+      });
+    }
+
+    return this.prismaService.user.findUnique({
+      where: { id },
+      include: {
+        skills: true,
+      },
     });
   }
 
@@ -154,17 +239,20 @@ export class UserService {
         this.prismaService.user
           .update({
             where: { id: user.id },
-            data: user, 
+            data: user,
+            include: {
+              skills: true,
+            },
           })
           .catch((error) => {
             console.error(`Error updating user with ID ${user.id}:`, error);
-          })
+          }),
       );
 
       await Promise.all(updatePromises);
     } catch (error) {
-      console.error("Error updating multiple users:", error);
-      throw new Error("Failed to update multiple users.");
+      console.error('Error updating multiple users:', error);
+      throw new Error('Failed to update multiple users.');
     }
   }
 }

@@ -90,10 +90,11 @@ model Lesson {
 
 model Skill {
   id           String       @id @default(uuid())
-  title        String      
+  title        String       @unique
   level        Level
   typeOfSkills TypeOfSkiils
   Course       Course[]
+  userSkill    userSkill[]
 
   @@map("skills")
 }
@@ -102,6 +103,7 @@ enum TypeOfSkiils {
   PRIMARY
   ADDITIONAL
 }
+
 enum Level {
   BEGINER
   INTERMADIATE
@@ -110,12 +112,12 @@ enum Level {
 
 model userSkill {
   id          String  @id @default(uuid())
-  user        User    @relation(fields: [userId], references: [id])
   userId      String
   skillId     String
   isConfirmed Boolean @default(false)
 
-  @@map("user_skills")
+  user  User  @relation(fields: [userId], references: [id])
+  skill Skill @relation(fields: [skillId], references: [id])
 }
 
 model Test {

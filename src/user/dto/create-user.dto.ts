@@ -1,5 +1,5 @@
-import { IsEmail, IsString, MinLength, IsOptional } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { IsEmail, IsString, MinLength, IsOptional, IsUUID, IsArray } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class CreateUserDto {
   @ApiProperty({
@@ -44,4 +44,14 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   avatar?: string;
+
+  @ApiPropertyOptional({ 
+    description: 'Array of skill IDs associated with the course', 
+    example: ['123e4567-e89b-12d3-a456-426614174001', '123e4567-e89b-12d3-a456-426614174002'],
+    type: [String]
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUUID(undefined, { each: true })
+  skillIds?: string[];
 }
