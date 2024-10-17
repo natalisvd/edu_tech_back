@@ -2,7 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Level } from '@prisma/client';
+import { Level, Skill } from '@prisma/client';
+import { CreateSkillWithAllLevelsDto } from './dto/create-skill-with-all-levels.dto';
 
 @Injectable()
 export class SkillService {
@@ -31,6 +32,25 @@ export class SkillService {
     return await this.prisma.skill.create({
       data: createSkillDto,
     });
+  }
+
+  async createWithAllLevels(createSkillWithAllLevelsDto: CreateSkillWithAllLevelsDto) {
+    for (const level of Object.values(Level)) {
+      await this.skillExists(createSkillWithAllLevelsDto.title, level);
+    }
+
+    const skills: Skill[] = [];
+    for (const level of Object.values(Level)) {
+      const skill = await this.prisma.skill.create({
+        data: {
+          ...createSkillWithAllLevelsDto,
+          level, 
+        },
+      });
+      skills.push(skill);
+    }
+
+    return skills;
   }
 
   async findAll() {
