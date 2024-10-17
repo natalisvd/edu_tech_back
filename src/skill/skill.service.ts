@@ -35,22 +35,33 @@ export class SkillService {
   }
 
   async createWithAllLevels(createSkillWithAllLevelsDto: CreateSkillWithAllLevelsDto) {
-    for (const level of Object.values(Level)) {
-      await this.skillExists(createSkillWithAllLevelsDto.title, level);
-    }
-
     const skills: Skill[] = [];
+  
     for (const level of Object.values(Level)) {
-      const skill = await this.prisma.skill.create({
-        data: {
-          ...createSkillWithAllLevelsDto,
-          level, 
+      const existingSkill = await this.prisma.skill.findFirst({
+        where: {
+          title: createSkillWithAllLevelsDto.title,
+          level,
         },
       });
-      skills.push(skill);
+  
+      if (existingSkill) {
+        console.log(`Skill with title "${createSkillWithAllLevelsDto.title}" and level "${level}" already exists. Skipping...`);
+        skills.push(existingSkill);  
+        continue;
+      }
+  
+      const newSkill = await this.prisma.skill.create({
+        data: {
+          ...createSkillWithAllLevelsDto,
+          level,
+        },
+      });
+      
+      skills.push(newSkill);  
     }
-
-    return skills;
+  
+    return skills;  
   }
 
   async findAll() {

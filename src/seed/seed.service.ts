@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Role, Level, TypeOfSkiils } from '@prisma/client';
+import { Role, TypeOfSkiils } from '@prisma/client';
 import { SkillService } from 'src/skill/skill.service';
 import { UserService } from 'src/user/user.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
@@ -16,6 +16,7 @@ export class SeedService {
     try {
       console.log('Running seed...');
 
+      // Создаем пользователей
       await this.createUserIfNotExists('testTeamleader@gmail.com', '123456', [
         Role.TEAMLEADER,
       ]);
@@ -34,43 +35,36 @@ export class SeedService {
 
       await this.createSkillIfNotExists({
         title: 'redux',
-        level: Level.ADVANCE,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
 
       await this.createSkillIfNotExists({
         title: 'typescript',
-        level: Level.BEGINER,
         typeOfSkills: TypeOfSkiils.ADDITIONAL,
       });
 
       await this.createSkillIfNotExists({
         title: 'React',
-        level: Level.INTERMADIATE,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
       
       await this.createSkillIfNotExists({
         title: 'Node.js',
-        level: Level.BEGINER,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
       
       await this.createSkillIfNotExists({
         title: 'GraphQL',
-        level: Level.ADVANCE,
         typeOfSkills: TypeOfSkiils.ADDITIONAL,
       });
       
       await this.createSkillIfNotExists({
         title: 'Docker',
-        level: Level.INTERMADIATE,
         typeOfSkills: TypeOfSkiils.ADDITIONAL,
       });
       
       await this.createSkillIfNotExists({
         title: 'Python',
-        level: Level.INTERMADIATE,
         typeOfSkills: TypeOfSkiils.PRIMARY,
       });
 
@@ -99,21 +93,9 @@ export class SeedService {
     }
   }
 
-  private async createSkillIfNotExists(createSkillDto: CreateSkillDto) {
+  private async createSkillIfNotExists(createSkillDto: Omit<CreateSkillDto, 'level'>) {
     try {
-      const existingSkill = await this.skillService.findSkillByTitleAndLevel(
-        createSkillDto.title,
-        createSkillDto.level,
-      );
-
-      if (existingSkill) {
-        console.log(
-          `Skill with title "${createSkillDto.title}" and level "${createSkillDto.level}" already exists. Skipping...`,
-        );
-        return;
-      }
-
-      await this.skillService.create(createSkillDto);
+      await this.skillService.createWithAllLevels(createSkillDto);
     } catch (error) {
       if (
         error instanceof PrismaClientKnownRequestError &&
