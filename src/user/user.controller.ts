@@ -57,7 +57,7 @@ export class UserController {
 
   @Post('currentUser')
   async currentUser(@CurrentUser() user: JwtPayload) {
-    return this.findOne(user.id);
+    return this.userService.findOne(user.id);
   }
 
   @Delete(':id')

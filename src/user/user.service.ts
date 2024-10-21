@@ -101,6 +101,9 @@ export class UserService {
         where: {
           OR: [{ id: idOrEmail }, { email: idOrEmail }],
         },
+        include: {
+          skills: true,
+        },
       });
       if (!user) {
         return null;

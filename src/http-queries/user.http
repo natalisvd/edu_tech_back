@@ -26,10 +26,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkNTc4Yjc1L
 ###
 PATCH  http://localhost:5000/api/user/currentUser HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1NTc2NDQ3LWYzYjEtNDNmMi05ZWI2LTQ3YmVmZWUxMDNlNiIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImlhdCI6MTcyOTA3MzUwNiwiZXhwIjoxNzI5MTU5OTA2fQ.au6Sp0XsQDl1IapOvVfcSiEBJ9BtsvPtr5IyXKI5ebc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1NTc2NDQ3LWYzYjEtNDNmMi05ZWI2LTQ3YmVmZWUxMDNlNiIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiJmaXJzdE5hbWUiLCJsYXN0TmFtZSI6Imxhc3ROYW1lIiwiaWF0IjoxNzI5MjM1Nzg5LCJleHAiOjE3MjkzMjIxODl9.od5UGaTIxOHrEeqxxwhdqX8umZbATx-bPeNyKSxQtRo
 
 {
     "firstName":"firstName",
     "lastName":"lastName",
-    "skillIds":["f57c86c8-df7f-463f-8779-09d4372d8577"]
+    "skillIds":["04f720e1-a68d-491e-96e8-4dcea042bc85", "07f64c8d-952c-42b2-8a43-d6d6f0575c7b"]
 }
+###
+GET http://localhost:5000/api/user/0d4dad0a-2c7a-4179-bed4-dfbd54783abd HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1NTc2NDQ3LWYzYjEtNDNmMi05ZWI2LTQ3YmVmZWUxMDNlNiIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiJmaXJzdE5hbWUiLCJsYXN0TmFtZSI6Imxhc3ROYW1lIiwiaWF0IjoxNzI5NTE1NTYxLCJleHAiOjE3Mjk2MDE5NjF9.x6fldlTU-aze4AReOW7GMuj-rWuoALVnU2wwqQzn5NI
+###
+GET http://localhost:5000/api/user/0d4dad0a-2c7a-4179-bed4-dfbd54783abd HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1NTc2NDQ3LWYzYjEtNDNmMi05ZWI2LTQ3YmVmZWUxMDNlNiIsImVtYWlsIjoidGVzdFRlYW1sZWFkZXJAZ21haWwuY29tIiwicm9sZXMiOlsiVEVBTUxFQURFUiJdLCJmaXJzdE5hbWUiOiJmaXJzdE5hbWUiLCJsYXN0TmFtZSI6Imxhc3ROYW1lIiwiaWF0IjoxNzI5NTE1NTYxLCJleHAiOjE3Mjk2MDE5NjF9.x6fldlTU-aze4AReOW7GMuj-rWuoALVnU2wwqQzn5NI
