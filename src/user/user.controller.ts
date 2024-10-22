@@ -120,6 +120,7 @@ export class UserController {
 
       return new UserResponce(updatedUser);
     } catch (error) {
+      console.log({ error });
       throw new BadRequestException('Error updating user');
     }
   }

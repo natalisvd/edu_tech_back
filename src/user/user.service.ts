@@ -156,7 +156,8 @@ export class UserService {
 
   async update(id: string, data: UpdateUserDto): Promise<User> {
     const { skillIds, ...userData } = data;
-
+    //@ts-ignore
+    delete userData.skills
     console.log({ skillIds });
     const user = await this.prismaService.user.findUnique({
       where: { id },
