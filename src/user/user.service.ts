@@ -68,6 +68,7 @@ export class UserService {
         roles: true,
         avatarUrl: true,
         teamId: true,
+        skills: true
       },
     });
   }
@@ -87,6 +88,7 @@ export class UserService {
         roles: true,
         avatarUrl: true,
         teamId: true,
+        skills: true
       },
     });
   }
