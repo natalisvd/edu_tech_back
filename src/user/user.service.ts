@@ -104,7 +104,17 @@ export class UserService {
           OR: [{ id: idOrEmail }, { email: idOrEmail }],
         },
         include: {
-          skills: true,
+          skills: {
+            include: {
+              skill: {
+                select: {
+                  title: true,
+                  level: true,
+                  typeOfSkills: true,
+                },
+              },
+            },
+          },
         },
       });
       if (!user) {
